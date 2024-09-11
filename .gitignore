@@ -1,4 +1,7 @@
 venv/
+.venv/
 
 *.pyc
 pycache/
+
+*.html
