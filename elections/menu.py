@@ -1,6 +1,5 @@
 from elections.elec_data import candidate_by_code, candidates_by_city_and_role
-from webbrowser import open_new as op
-from elections.view import gen_statistics_html
+from elections.view import gen_statistics_html, open_file
 
 def main():
   while True:
@@ -65,9 +64,13 @@ def option_2():
 
 def option_3():
   clear()
-  if input("Deseja abrir a página com as estatísticas (S ou N)? ").upper() == "S":
-    gen_statistics_html()
-    op("html/stats.html")
+  res = input("Deseja abrir a página com as estatísticas (S ou N)? ").upper()
+  if res == "S":
+    open_file(gen_statistics_html())    
+  elif res not in "SN":
+    print("Opção inválida...")
+    option_3()
+    
 
 if __name__ == "__main__":
   main()
