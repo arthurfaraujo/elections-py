@@ -30,7 +30,7 @@ def clear():
   import os
   os.system('cls' if os.name == 'nt' else 'clear')
       
-def proceed():
+def proceed() -> bool:
   cont = input("Continuar (S ou N)? ").strip().upper()
   if cont == "N": 
     return False

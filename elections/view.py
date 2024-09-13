@@ -2,7 +2,7 @@ from pandas import DataFrame
 from jinja2 import Template
 import elections.elec_data as ed
 
-def gen_statistics_html():
+def gen_statistics_html() -> str:
     qtd_por_cargo = ed.role_quantity_count()
     partidos_prefeito = ed.parties_with_mayor_candidates()
     qtd_por_faixa_etaria = ed.quantity_by_age_group()

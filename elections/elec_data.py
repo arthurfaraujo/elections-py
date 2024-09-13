@@ -4,20 +4,20 @@ df = pd.read_csv("data/consulta_cand_2024_PB.csv", encoding="latin1", sep=";", e
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 
-def candidates_by_city_and_role(cityCode: int, roleCode: int):
+def candidates_by_city_and_role(cityCode: int, roleCode: int) -> pd.DataFrame:
   return df[(df["SG_UE"] == cityCode) & (df["CD_CARGO"] == roleCode)][["SQ_CANDIDATO", "NM_CANDIDATO", "NM_URNA_CANDIDATO", "NR_CANDIDATO", "NM_PARTIDO"]]
 
-def candidate_by_code(code: int):
+def candidate_by_code(code: int) -> pd.DataFrame:
   return df.loc[df["SQ_CANDIDATO"] == code, ["NM_CANDIDATO", "NM_URNA_CANDIDATO", "NR_CANDIDATO", "NM_PARTIDO"]]
 
-def role_quantity_count():
+def role_quantity_count() -> dict:
     return df['DS_CARGO'].value_counts().to_dict()
 
-def parties_with_mayor_candidates():
-    partidos = df[df['DS_CARGO'] == 'Prefeito']['SG_PARTIDO'].unique()
+def parties_with_mayor_candidates() -> list:
+    partidos = df[df['DS_CARGO'] == 'PREFEITO']['SG_PARTIDO'].unique()
     return partidos.tolist()
 
-def quantity_by_age_group():
+def quantity_by_age_group() -> dict:
     df['IDADE'] = pd.to_datetime('2024-01-01') - pd.to_datetime(df['DT_NASCIMENTO'], format='%d/%m/%Y', errors='coerce')
     df['IDADE'] = df['IDADE'].dt.days // 365
     faixa_ate_21 = df[df['IDADE'] <= 21].shape[0]
@@ -26,10 +26,10 @@ def quantity_by_age_group():
     faixa_acima_60 = df[df['IDADE'] > 60].shape[0]
     return {'Até 21 anos': faixa_ate_21, '22 a 40 anos': faixa_22_40, '41 a 60 anos': faixa_41_60, 'Acima de 60 anos': faixa_acima_60}
 
-def percentage_by_category(coluna, cargo):
+def percentage_by_category(coluna: str, cargo: str) -> dict:
     # total_cargo = df[df['DS_CARGO'] == cargo].shape[0]
     percentuais = df[df['DS_CARGO'] == cargo][coluna].value_counts(normalize=True) * 100
     return percentuais.to_dict()
   
-def roles():
+def roles() -> pd.DataFrame:
   return df['DS_CARGO'].unique()
