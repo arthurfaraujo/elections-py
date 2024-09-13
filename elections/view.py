@@ -1,6 +1,8 @@
 from pandas import DataFrame
 from jinja2 import Template
 import elections.elec_data as ed
+import os
+from webbrowser import open_new as op
 
 def gen_statistics_html() -> str:
     qtd_por_cargo = ed.role_quantity_count()
@@ -79,7 +81,11 @@ def gen_statistics_html() -> str:
         percentual_estado_civil=percentual_estado_civil
     )
     
+    os.system("mkdir html")
     with open("html/stats.html", "w", encoding="utf-8") as file:
         file.write(html_content)
     
-    print("Página HTML 'stats.html' gerada com sucesso.")
+    return "html/stats.html"
+
+def open_file(relPath: str):
+  op(os.path.abspath(relPath))
