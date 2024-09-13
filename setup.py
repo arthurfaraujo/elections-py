@@ -8,6 +8,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'pandas',
+        'jinja2'
     ],
     entry_points={
         'console_scripts': [
