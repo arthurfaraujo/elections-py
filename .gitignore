@@ -5,3 +5,5 @@ venv/
 pycache/
 
 *.html
+*.egg-info/
+build/
