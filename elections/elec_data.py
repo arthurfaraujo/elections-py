@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv("data/consulta_cand_2024_PB.csv", encoding="latin1", sep=";", encoding_errors='replace')
+df = pd.read_csv("data/consulta_cand_2024_PB.csv", encoding="latin1", sep=";")
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 
