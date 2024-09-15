@@ -76,7 +76,7 @@ def option_by_city_and_role() -> None:
   if not validate_number(role_code):
     return option_by_city_and_role()
   
-  print(candidates_by_city_and_role(city_code, role_code).to_string(index=False))
+  print(candidates_by_city_and_role(int(city_code), int(role_code)).to_string(index=False))
   input("\nPressione qualquer tecla para voltar ao menu...")
 
 
@@ -87,14 +87,14 @@ def option_by_code() -> None:
   clear()
   print("Digite 'q' para voltar ao menu anterior.")
   
-  candidate_code = input("Código sequencial numérico do candidato desejado: ")
-  if candidate_code in "qQ":
+  candidate_code = input("Código sequencial numérico do candidato desejado: ").lower()
+  if candidate_code == "q":
     return
   
   if not validate_number(candidate_code):
     return option_by_code()
   
-  print(candidate_by_code(candidate_code).to_string(index=False))
+  print(candidate_by_code(int(candidate_code)).to_string(index=False))
   input("\nPressione qualquer tecla para voltar ao menu...")
 
 
