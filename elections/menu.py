@@ -25,7 +25,6 @@ def main():
       case _:
         print("Opção inválida, tente de novo...")
         time.sleep(0.8)
-        continue
       
       
 def clear():
@@ -63,15 +62,15 @@ def option_by_city_and_role() -> None:
   clear()
   print("Digite 'q' para voltar ao menu anterior.")
   
-  city_code = input("Código numérico da cidade desejada: ")
-  if city_code in "qQ":
+  city_code = input("Código numérico da cidade desejada: ").lower()
+  if city_code == "q":
     return
   
   if not validate_number(city_code):
     return option_by_city_and_role()
     
-  role_code = input("Código numérico do cargo desejado: ")
-  if role_code in "qQ": 
+  role_code = input("Código numérico do cargo desejado: ").lower()
+  if role_code == "q": 
     return
   
   if not validate_number(role_code):
@@ -102,10 +101,10 @@ def option_gen_statistics() -> None:
   Opção do menu que gera uma página HTML com estatísticas sobre os candidatos.
   """
   clear()
-  user_confirm = input("Deseja abrir a página com as estatísticas (S ou N)? ").upper()
-  if user_confirm == "S":
+  user_confirm = input("Deseja abrir a página com as estatísticas (S ou N)? ").lower()
+  if user_confirm == "s":
     open_file(gen_statistics_html())    
-  elif user_confirm not in "SN":
+  elif user_confirm != "n":
     print("Opção inválida...")
     time.sleep(0.8)
     option_gen_statistics()
