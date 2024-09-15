@@ -77,6 +77,7 @@ def option_by_city_and_role() -> None:
     return option_by_city_and_role()
   
   print(candidates_by_city_and_role(city_code, role_code).to_string(index=False))
+  input("\nPressione qualquer tecla para voltar ao menu...")
 
 
 def option_by_code() -> None:
@@ -94,6 +95,7 @@ def option_by_code() -> None:
     return option_by_code()
   
   print(candidate_by_code(candidate_code).to_string(index=False))
+  input("\nPressione qualquer tecla para voltar ao menu...")
 
 
 def option_gen_statistics() -> None:
