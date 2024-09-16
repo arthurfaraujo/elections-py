@@ -58,7 +58,6 @@ def option_by_city_and_role() -> None:
   """
   Opção do menu que lista os candidatos por município e cargo.
   """
-  
   clear()
   print("Digite 'q' para voltar ao menu anterior.")
   
@@ -76,7 +75,14 @@ def option_by_city_and_role() -> None:
   if not validate_number(role_code):
     return option_by_city_and_role()
   
-  print(candidates_by_city_and_role(int(city_code), int(role_code)).to_string(index=False))
+  df_city_and_role = candidates_by_city_and_role(int(city_code), int(role_code))
+  
+  print()
+  if df_city_and_role.empty:
+    print("Município não encontrado ou cargo inválido.")
+  else:
+    print(df_city_and_role.to_string(index=False))
+  
   input("\nPressione qualquer tecla para voltar ao menu...")
 
 
@@ -94,7 +100,14 @@ def option_by_code() -> None:
   if not validate_number(candidate_code):
     return option_by_code()
   
-  print(candidate_by_code(int(candidate_code)).to_string(index=False))
+  df_candidate = candidate_by_code(int(candidate_code))
+  
+  print()
+  if df_candidate.empty:
+    print("Candidato não encontrado.")
+  else:
+    print(df_candidate.to_string(index=False))
+  
   input("\nPressione qualquer tecla para voltar ao menu...")
 
 
@@ -110,7 +123,8 @@ def option_gen_statistics() -> None:
     print("Opção inválida...")
     time.sleep(0.8)
     option_gen_statistics()
-    
+  
+  input("\nPressione qualquer tecla para voltar ao menu...")
 
 if __name__ == "__main__":
   main()
