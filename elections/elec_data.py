@@ -4,21 +4,26 @@ candidates_df = pd.read_csv("data/consulta_cand_2024_PB.csv", encoding="latin1",
 social_media_df = pd.read_csv("data/rede_social_candidato_2024_PB.csv", encoding="latin1", sep=";") 
 goods_df = pd.read_csv("data/bem_candidato_2024_PB.csv", encoding="latin1", sep=";")
 
+
+candidates_df.rename(columns={"SQ_CANDIDATO": "Código Sequencial", "NM_CANDIDATO": "Nome", "NM_URNA_CANDIDATO": "Nome na urna", "NR_CANDIDATO": "Número","NM_PARTIDO": "Partido"}, inplace=True)
+social_media_df.rename(columns={"SQ_CANDIDATO": "Código Sequencial", "DS_URL": "Link da rede social"}, inplace=True)
+goods_df.rename(columns={"SQ_CANDIDATO": "Código Sequencial", "DS_TIPO_BEM_CANDIDATO": "Tipo do bem", "DS_BEM_CANDIDATO": "Bem", "VR_BEM_CANDIDATO": "Valor do bem"}, inplace=True)
+
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 
 def candidates_by_city_and_role(cityCode: int, roleCode: int) -> pd.DataFrame:
-  return candidates_df[(candidates_df["SG_UE"] == cityCode) & (candidates_df["CD_CARGO"] == roleCode)][["SQ_CANDIDATO", "NM_CANDIDATO", "NM_URNA_CANDIDATO", "NR_CANDIDATO", "NM_PARTIDO"]]
+  return candidates_df[(candidates_df["SG_UE"] == cityCode) & (candidates_df["CD_CARGO"] == roleCode)][["Código Sequencial", "Nome", "Nome na urna", "Número", "Partido"]]
 
 # separar em várias funções que chamam as infos pelo código e depois juntar num candidate_info
 def goods_by_code(candidateCode: int):
-  return goods_df[goods_df["SQ_CANDIDATO"] == candidateCode][["DS_TIPO_BEM_CANDIDATO", "DS_BEM_CANDIDATO", "VR_BEM_CANDIDATO"]]
+  return goods_df[goods_df["Código Sequencial"] == candidateCode][["Tipo do bem", "Bem", "Valor do bem"]]
   
 def social_medias_by_code(candidateCode: int):
-  return social_media_df[social_media_df["SQ_CANDIDATO"] == candidateCode][["DS_URL"]]
+  return social_media_df[social_media_df["Código Sequencial"] == candidateCode][["Link da rede social"]]
 
 def candidate_by_code(candidateCode: int) -> pd.DataFrame:
-  return candidates_df.loc[candidates_df["SQ_CANDIDATO"] == candidateCode, ["NM_CANDIDATO", "NM_URNA_CANDIDATO", "NR_CANDIDATO", "NM_PARTIDO"]]
+  return candidates_df.loc[(candidates_df["Código Sequencial"] == candidateCode), ["Nome", "Nome na urna", "Número", "Partido"]]
 
 def role_quantity_count() -> dict:
     return candidates_df['DS_CARGO'].value_counts().to_dict()
