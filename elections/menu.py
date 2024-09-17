@@ -1,4 +1,4 @@
-from elections.elec_data import candidate_by_code, candidates_by_city_and_role
+from elections.elec_data import candidate_by_code, candidates_by_city_and_role, goods_by_code, social_medias_by_code
 from elections.view import gen_statistics_html, open_file
 import os, time
 
@@ -94,7 +94,12 @@ def option_by_code() -> None:
   if not validate_number(candidate_code):
     return option_by_code()
   
+  print()
   print(candidate_by_code(int(candidate_code)).to_string(index=False))
+  print("\nBens do candidato(a):")
+  print(goods_by_code(int(candidate_code)).to_string(index=False))
+  print("\nRedes sociais do candidato(a):")
+  print(social_medias_by_code(int(candidate_code)).to_string(index=False))
   input("\nPressione qualquer tecla para voltar ao menu...")
 
 
