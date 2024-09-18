@@ -15,7 +15,6 @@ pd.set_option('display.max_columns', None)
 def candidates_by_city_and_role(cityCode: int, roleCode: int) -> pd.DataFrame:
   return candidates_df[(candidates_df["SG_UE"] == cityCode) & (candidates_df["CD_CARGO"] == roleCode)][["Código Sequencial", "Nome", "Nome na urna", "Número", "Partido"]]
 
-# separar em várias funções que chamam as infos pelo código e depois juntar num candidate_info
 def goods_by_code(candidateCode: int):
   return goods_df[goods_df["Código Sequencial"] == candidateCode][["Tipo do bem", "Bem", "Valor do bem"]]
   
