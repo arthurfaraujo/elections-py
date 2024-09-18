@@ -59,7 +59,6 @@ def option_by_city_and_role() -> None:
   """
   Opção do menu que lista os candidatos por município e cargo.
   """
-  
   clear()
   print("Digite 'q' para voltar ao menu anterior.")
   
@@ -79,6 +78,7 @@ def option_by_city_and_role() -> None:
   
   print()
   print(treat_empty_df(candidates_by_city_and_role(int(city_code), int(role_code)), "Município ou cargo não encontrado!"))
+
   input("\nPressione qualquer tecla para voltar ao menu...")
 
 
@@ -102,6 +102,7 @@ def option_by_code() -> None:
   print(treat_empty_df(goods_by_code(int(candidate_code)), "Nem um bem encontrado!"))
   print("\nRedes sociais do candidato(a):")
   print(treat_empty_df(social_medias_by_code(int(candidate_code)), "Nem uma rede social encontrada!"))
+
   input("\nPressione qualquer tecla para voltar ao menu...")
 
 
@@ -117,9 +118,11 @@ def option_gen_statistics() -> None:
     print("Opção inválida...")
     time.sleep(0.8)
     option_gen_statistics()
+  
+  input("\nPressione qualquer tecla para voltar ao menu...")
     
 def treat_empty_df(df: DataFrame, message: str):
   return df.to_string(index=False) if not df.empty else message 
-  
+
 if __name__ == "__main__":
   main()

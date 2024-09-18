@@ -81,7 +81,8 @@ def gen_statistics_html() -> str:
         percentual_estado_civil=percentual_estado_civil
     )
     
-    os.system("mkdir html")
+    if not os.path.exists("html"):
+      os.makedirs("html")
     with open("html/stats.html", "w", encoding="utf-8") as file:
         file.write(html_content)
     
