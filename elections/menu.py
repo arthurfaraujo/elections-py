@@ -1,5 +1,6 @@
 from elections.elec_data import candidate_by_code, candidates_by_city_and_role, goods_by_code, social_medias_by_code
 from elections.view import gen_statistics_html, open_file
+from pandas import DataFrame
 import os, time
 
 def main():
@@ -76,7 +77,8 @@ def option_by_city_and_role() -> None:
   if not validate_number(role_code):
     return option_by_city_and_role()
   
-  print(candidates_by_city_and_role(int(city_code), int(role_code)).to_string(index=False))
+  print()
+  print(treat_empty_df(candidates_by_city_and_role(int(city_code), int(role_code)), "Município ou cargo não encontrado!"))
   input("\nPressione qualquer tecla para voltar ao menu...")
 
 
@@ -95,11 +97,11 @@ def option_by_code() -> None:
     return option_by_code()
   
   print()
-  print(candidate_by_code(int(candidate_code)).to_string(index=False))
+  print(treat_empty_df(candidate_by_code(int(candidate_code)), "Candidato não encontrado!"))
   print("\nBens do candidato(a):")
-  print(goods_by_code(int(candidate_code)).to_string(index=False))
+  print(treat_empty_df(goods_by_code(int(candidate_code)), "Nem um bem encontrado!"))
   print("\nRedes sociais do candidato(a):")
-  print(social_medias_by_code(int(candidate_code)).to_string(index=False))
+  print(treat_empty_df(social_medias_by_code(int(candidate_code)), "Nem uma rede social encontrada!"))
   input("\nPressione qualquer tecla para voltar ao menu...")
 
 
@@ -116,6 +118,8 @@ def option_gen_statistics() -> None:
     time.sleep(0.8)
     option_gen_statistics()
     
-
+def treat_empty_df(df: DataFrame, message: str):
+  return df.to_string(index=False) if not df.empty else message 
+  
 if __name__ == "__main__":
   main()
