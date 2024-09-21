@@ -47,3 +47,21 @@ def percentage_by_category(coluna: str, cargo: str) -> dict:
   
 def roles() -> pd.DataFrame:
   return candidates_df['DS_CARGO'].unique()
+
+def cities() -> list:
+  return candidates_df['NM_UE'].unique().tolist()
+
+def roles_by_city(cityName: str) -> dict:
+  prefeitos = candidates_df[(candidates_df["NM_UE"] == cityName) & (candidates_df["DS_CARGO"] == "PREFEITO")]["Nome"]
+  vice_prefeitos = candidates_df[(candidates_df["NM_UE"] == cityName) & (candidates_df["DS_CARGO"] == "VICE-PREFEITO")]["Nome"]
+  vereadores = candidates_df[(candidates_df["NM_UE"] == cityName) & (candidates_df["DS_CARGO"] == "VEREADOR")]["Nome"]
+  
+  
+  dicionario = {
+    'prefeitos': [x for x in prefeitos],
+    'vice_prefeitos': [x for x in vice_prefeitos],
+    'vereadores': [x for x in vereadores]
+  }
+  return dicionario 
+
+# print(cities())
