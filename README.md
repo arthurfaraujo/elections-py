@@ -13,8 +13,12 @@ no Linux e
 ```cmd
 .venv/Scripts/activate
 ```
-no Windows, executar 
-```pip install .``` na **raíz** do projeto e então usar o comando de terminal do projeto **elect-ape**.
+no Windows, e então instalar as bibliotecas e rodar o projeto com 
+```bash
+pip install -r requirements.txt
+python -m elections.menu
+```
+
 
 ## Funcionamento
 A aplicação possui um menu interativo e intuitivo que possibilita o usuário a usá-la sem grandes problemas. 
