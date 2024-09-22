@@ -1,4 +1,3 @@
-from pandas import DataFrame
 from jinja2 import Template
 import elections.elec_data as ed
 import os
@@ -81,8 +80,7 @@ def gen_statistics_html() -> str:
         percentual_estado_civil=percentual_estado_civil
     )
     
-    if not os.path.exists("html"):
-      os.makedirs("html")
+    
     with open("html/stats.html", "w", encoding="utf-8") as file:
         file.write(html_content)
     
@@ -90,3 +88,11 @@ def gen_statistics_html() -> str:
 
 def open_file(relPath: str):
   op(os.path.abspath(relPath))
+
+def open_url(url: str):
+  op(url)
+  
+def create_html_dir():
+    if not os.path.exists("html"):
+      os.makedirs("html")
+      
