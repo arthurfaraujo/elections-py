@@ -12,63 +12,83 @@ def gen_statistics_html() -> str:
     percentual_estado_civil = {cargo: ed.percentage_by_category('DS_ESTADO_CIVIL', cargo) for cargo in ed.roles()}
 
     template = Template("""
-    <html>
-    <head><title>Estatísticas Eleitorais - Eleições 2024</title></head>
-    <body>
-    <h1>Estatísticas de Candidatos - Eleições 2024</h1>
-    <h2>Quantidade de Candidatos por Cargo</h2>
-    <ul>
-        {% for cargo, qtd in qtd_por_cargo.items() %}
-        <li>{{ cargo }}: {{ qtd }}</li>
-        {% endfor %}
-    </ul>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Estatísticas Eleitorais - Eleições 2024</title>
+</head>
+
+<body class="container mx-auto">
+    <h1 class="py-4 font-bold text-gray-700 text-2xl text-center border-b">Estatísticas de Candidatos - Eleições 2024</h1>
+    <div class="mt-8 flex flex-col mx-auto max-w-[800px]">
+        
+        <div class="border p-4 rounded m-4">
+            <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Quantidade de Candidatos por Cargo</h2>
+            <ul>
+                {% for cargo, qtd in qtd_por_cargo.items() %}
+                <li>{{ cargo }}: {{ qtd }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="border p-4 rounded m-4">
+            <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Partidos com Candidatos ao Cargo de Prefeito</h2>
+            <ul class="flex flex-wrap">
+                {% for partido in partidos_prefeito %}
+                <li class="border p-4 rounded m-2 grow">{{ partido }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="border p-4 rounded m-4">
+            <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Quantidade de Candidatos por Faixa Etária</h2>
+            <ul>
+                {% for faixa, qtd in qtd_por_faixa_etaria.items() %}
+                <li>{{ faixa }}: {{ qtd }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="border p-4 rounded m-4">
+            <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Percentual de Candidatos por Cargo e Grau de Instrução</h2>
+            {% for cargo, percentuais in percentual_instrucao.items() %}
+            <h3>{{ cargo }}</h3>
+            <ul>
+                {% for categoria, percentual in percentuais.items() %}
+                <li>{{ categoria }}: {{ "%.2f" % percentual }}%</li>
+                {% endfor %}
+            </ul>
+            {% endfor %}
+        </div>
     
-    <h2>Partidos com Candidatos ao Cargo de Prefeito</h2>
-    <ul>
-        {% for partido in partidos_prefeito %}
-        <li>{{ partido }}</li>
-        {% endfor %}
-    </ul>
+        <div class="border p-4 rounded m-4">
+            <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Percentual de Candidatos por Cargo e Gênero</h2>
+            {% for cargo, percentuais in percentual_genero.items() %}
+            <h3>{{ cargo }}</h3>
+            <ul>
+                {% for categoria, percentual in percentuais.items() %}
+                <li>{{ categoria }}: {{ "%.2f" % percentual }}%</li>
+                {% endfor %}
+            </ul>
+            {% endfor %}
+        </div>
 
-    <h2>Quantidade de Candidatos por Faixa Etária</h2>
-    <ul>
-        {% for faixa, qtd in qtd_por_faixa_etaria.items() %}
-        <li>{{ faixa }}: {{ qtd }}</li>
-        {% endfor %}
-    </ul>
-
-    <h2>Percentual de Candidatos por Cargo e Grau de Instrução</h2>
-    {% for cargo, percentuais in percentual_instrucao.items() %}
-        <h3>{{ cargo }}</h3>
-        <ul>
-        {% for categoria, percentual in percentuais.items() %}
-            <li>{{ categoria }}: {{ "%.2f" % percentual }}%</li>
-        {% endfor %}
-        </ul>
-    {% endfor %}
-
-    <h2>Percentual de Candidatos por Cargo e Gênero</h2>
-    {% for cargo, percentuais in percentual_genero.items() %}
-        <h3>{{ cargo }}</h3>
-        <ul>
-        {% for categoria, percentual in percentuais.items() %}
-            <li>{{ categoria }}: {{ "%.2f" % percentual }}%</li>
-        {% endfor %}
-        </ul>
-    {% endfor %}
-
-    <h2>Percentual de Candidatos por Cargo e Estado Civil</h2>
-    {% for cargo, percentuais in percentual_estado_civil.items() %}
-        <h3>{{ cargo }}</h3>
-        <ul>
-        {% for categoria, percentual in percentuais.items() %}
-            <li>{{ categoria }}: {{ "%.2f" % percentual }}%</li>
-        {% endfor %}
-        </ul>
-    {% endfor %}
-    
-    </body>
-    </html>
+        <div class="border p-4 rounded m-4">
+            <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Percentual de Candidatos por Cargo e Estado Civil</h2>
+            {% for cargo, percentuais in percentual_estado_civil.items() %}
+            <h3>{{ cargo }}</h3>
+            <ul>
+                {% for categoria, percentual in percentuais.items() %}
+                <li>{{ categoria }}: {{ "%.2f" % percentual }}%</li>
+                {% endfor %}
+            </ul>
+            {%endfor %}
+        </div>
+    </div>
+</body>
+</html>
     """)
 
     html_content = template.render(
