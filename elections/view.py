@@ -28,7 +28,7 @@ def gen_statistics_html() -> str:
             <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Quantidade de Candidatos por Cargo</h2>
             <ul>
                 {% for cargo, qtd in qtd_por_cargo.items() %}
-                <li>{{ cargo }}: {{ qtd }}</li>
+                <li class="flex justify-between"><span class="font-semibold text-gray-600">{{ cargo }}:</span> <span>{{ qtd }}</span></li>
                 {% endfor %}
             </ul>
         </div>
@@ -37,7 +37,7 @@ def gen_statistics_html() -> str:
             <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Partidos com Candidatos ao Cargo de Prefeito</h2>
             <ul class="flex flex-wrap">
                 {% for partido in partidos_prefeito %}
-                <li class="border p-4 rounded m-2 grow">{{ partido }}</li>
+                <li class="hover:scale-105 duration-300 border p-4 rounded m-2 grow">{{ partido }}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -46,7 +46,7 @@ def gen_statistics_html() -> str:
             <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Quantidade de Candidatos por Faixa Etária</h2>
             <ul>
                 {% for faixa, qtd in qtd_por_faixa_etaria.items() %}
-                <li>{{ faixa }}: {{ qtd }}</li>
+                <li class="flex justify-between"><span class="font-semibold text-gray-600">{{ faixa }}:</span> <span>{{ qtd }}</span></li>
                 {% endfor %}
             </ul>
         </div>
@@ -54,10 +54,10 @@ def gen_statistics_html() -> str:
         <div class="border p-4 rounded m-4">
             <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Percentual de Candidatos por Cargo e Grau de Instrução</h2>
             {% for cargo, percentuais in percentual_instrucao.items() %}
-            <h3>{{ cargo }}</h3>
+            <h3 class="text-gray-600 font-bold mt-8 text-lg">{{ cargo }}</h3>
             <ul>
                 {% for categoria, percentual in percentuais.items() %}
-                <li>{{ categoria }}: {{ "%.2f" % percentual }}%</li>
+                <li class="flex justify-between"><span class="font-semibold text-gray-600">{{ categoria }}:</span> <span>{{ "%.2f" % percentual }}%</span></li>
                 {% endfor %}
             </ul>
             {% endfor %}
@@ -66,10 +66,10 @@ def gen_statistics_html() -> str:
         <div class="border p-4 rounded m-4">
             <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Percentual de Candidatos por Cargo e Gênero</h2>
             {% for cargo, percentuais in percentual_genero.items() %}
-            <h3>{{ cargo }}</h3>
+            <h3 class="text-gray-600 font-bold mt-8 text-lg">{{ cargo }}</h3>
             <ul>
                 {% for categoria, percentual in percentuais.items() %}
-                <li>{{ categoria }}: {{ "%.2f" % percentual }}%</li>
+                <li class="flex justify-between"><span class="font-semibold text-gray-600">{{ categoria }}:</span> <span>{{ "%.2f" % percentual }}%</span></li>
                 {% endfor %}
             </ul>
             {% endfor %}
@@ -78,10 +78,10 @@ def gen_statistics_html() -> str:
         <div class="border p-4 rounded m-4">
             <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Percentual de Candidatos por Cargo e Estado Civil</h2>
             {% for cargo, percentuais in percentual_estado_civil.items() %}
-            <h3>{{ cargo }}</h3>
+            <h3 class="text-gray-600 font-bold mt-8 text-lg">{{ cargo }}</h3>
             <ul>
                 {% for categoria, percentual in percentuais.items() %}
-                <li>{{ categoria }}: {{ "%.2f" % percentual }}%</li>
+                <li class="flex justify-between"><span class="font-semibold text-gray-600">{{ categoria }}:</span> <span>{{ "%.2f" % percentual }}%</span></li>
                 {% endfor %}
             </ul>
             {%endfor %}
