@@ -1,6 +1,6 @@
 import logging
 from flask import Flask, render_template_string, request
-from elections.elec_data import cities, roles_by_city
+from elections.elec_data import cities, roles_by_city, social_medias_by_code
 
 app = Flask(__name__)
 
@@ -73,17 +73,29 @@ def candidato():
     id_candidato = request.args.get('id')
     cargo = request.args.get('cargo')
     municipio = request.args.get('municipio')
-    
+    imagem = f"https://raw.githubusercontent.com/davicesarmorais/fotos-candidatos-pb/main/fotos-candidatos-pb/FPB{id_candidato}_div.jpg"    
+    link_redes = social_medias_by_code(int(id_candidato))
+
+    redes = ""
+    # arthur nao apaga <-------------------------
+    # variavel redes terá varias <li> com links
+    for index, row in link_redes.iterrows():
+        # index, row para iterar por cada indice e linha
+        redes += f"<li><a href='{row['Link da rede social']}'>{row['Link da rede social']}</a></li>"
+        #row['Link da rede social'] para percorrer justamente por essa coluna
+
     return render_template_string("""
     <html>
     <head><title>{{ id_candidato }} - {{ cargo }}</title></head>
     <body>
         <h1>{{ id_candidato }} - {{ cargo }}</h1>
         <p>Candidato a {{ cargo }} no município de {{ municipio }}.</p>
+        <img src="{{ imagem }}"> <br>
+        <ul>{{ link_redes | safe }}</ul>
         <a href="/municipio?municipio={{ municipio }}">Voltar para o município</a>
     </body>
     </html>
-    """, id_candidato=id_candidato, cargo=cargo, municipio=municipio)
+    """, link_redes=redes, imagem=imagem, id_candidato=id_candidato, cargo=cargo, municipio=municipio)
 
 
 def start_flask():

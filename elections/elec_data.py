@@ -63,3 +63,5 @@ def roles_by_city(cityName: str) -> dict:
     'vereadores': [x for x in vereadores]
   }
   return dicionario 
+
+# print(list(social_medias_by_code(150001997026)))
