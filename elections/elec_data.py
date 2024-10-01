@@ -52,9 +52,9 @@ def cities() -> list:
   return candidates_df['NM_UE'].unique().tolist()
 
 def roles_by_city(cityName: str) -> dict:
-  prefeitos = candidates_df[(candidates_df["NM_UE"] == cityName) & (candidates_df["DS_CARGO"] == "PREFEITO")]["Nome"]
-  vice_prefeitos = candidates_df[(candidates_df["NM_UE"] == cityName) & (candidates_df["DS_CARGO"] == "VICE-PREFEITO")]["Nome"]
-  vereadores = candidates_df[(candidates_df["NM_UE"] == cityName) & (candidates_df["DS_CARGO"] == "VEREADOR")]["Nome"]
+  prefeitos = list(candidates_df[(candidates_df["NM_UE"] == cityName) & (candidates_df["DS_CARGO"] == "PREFEITO")][["Nome", "Código Sequencial"]].itertuples(index=False, name=None))
+  vice_prefeitos = list(candidates_df[(candidates_df["NM_UE"] == cityName) & (candidates_df["DS_CARGO"] == "VICE-PREFEITO")][["Nome", "Código Sequencial"]].itertuples(index=False, name=None))
+  vereadores = list(candidates_df[(candidates_df["NM_UE"] == cityName) & (candidates_df["DS_CARGO"] == "VEREADOR")][["Nome", "Código Sequencial"]].itertuples(index=False, name=None))
   
   
   dicionario = {
@@ -63,5 +63,3 @@ def roles_by_city(cityName: str) -> dict:
     'vereadores': [x for x in vereadores]
   }
   return dicionario 
-
-# print(cities())

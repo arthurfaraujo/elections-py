@@ -39,16 +39,16 @@ def municipio():
         
         prefeitos = ""
         for prefeito in candidates_city['prefeitos']:
-            prefeitos += f"<li><a href='/candidato?nome={prefeito}&cargo=Prefeito&municipio={municipio}'>{prefeito}</a></li>"
+            prefeitos += f"<li><a href='/candidato?id={prefeito[1]}&cargo=Prefeito&municipio={municipio}'>{prefeito[0]}</a></li>"
         
         vice_prefeitos = ""
         for vice_prefeito in candidates_city['vice_prefeitos']:
-            vice_prefeitos += f"<li><a href='/candidato?nome={vice_prefeito}&cargo=Vice-Prefeito&municipio={municipio}'>{vice_prefeito}</a></li>"
+            vice_prefeitos += f"<li><a href='/candidato?id={vice_prefeito[1]}&cargo=Vice-Prefeito&municipio={municipio}'>{vice_prefeito[0]}</a></li>"
         
         
         vereadores = ""
         for vereador in candidates_city['vereadores']:
-            vereadores += f"<li><a href='/candidato?nome={vereador}&cargo=Vereador&municipio={municipio}'>{vereador}</a></li>"
+            vereadores += f"<li><a href='/candidato?id={vereador[1]}&cargo=Vereador&municipio={municipio}'>{vereador[0]}</a></li>"
         
         
         return render_template_string("""
@@ -70,20 +70,20 @@ def municipio():
 
 @app.route('/candidato')
 def candidato():
-    nome_candidato = request.args.get('nome')
+    id_candidato = request.args.get('id')
     cargo = request.args.get('cargo')
     municipio = request.args.get('municipio')
     
     return render_template_string("""
     <html>
-    <head><title>{{ nome_candidato }} - {{ cargo }}</title></head>
+    <head><title>{{ id_candidato }} - {{ cargo }}</title></head>
     <body>
-        <h1>{{ nome_candidato }} - {{ cargo }}</h1>
+        <h1>{{ id_candidato }} - {{ cargo }}</h1>
         <p>Candidato a {{ cargo }} no município de {{ municipio }}.</p>
         <a href="/municipio?municipio={{ municipio }}">Voltar para o município</a>
     </body>
     </html>
-    """, nome_candidato=nome_candidato, cargo=cargo, municipio=municipio)
+    """, id_candidato=id_candidato, cargo=cargo, municipio=municipio)
 
 
 def start_flask():
