@@ -1,6 +1,6 @@
 import logging
 from flask import Flask, render_template_string, request
-from elections.elec_data import cities, roles_by_city, social_medias_by_code
+from elections.elec_data import cities, roles_by_city, social_medias_by_code, candidate_by_code
 
 app = Flask(__name__)
 
@@ -75,7 +75,11 @@ def candidato():
     municipio = request.args.get('municipio')
     imagem = f"https://raw.githubusercontent.com/davicesarmorais/fotos-candidatos-pb/main/fotos-candidatos-pb/FPB{id_candidato}_div.jpg"    
     link_redes = social_medias_by_code(int(id_candidato))
-
+    candidato_df = candidate_by_code (int(id_candidato))
+    NomeCandidato = candidato_df['Nome'].values[0]
+    NomeUrna = candidato_df['Nome na urna'].values[0]
+    NumeroCandidato = candidato_df['Número'].values[0]
+    Partido = candidato_df['Partido'].values[0]
     redes = ""
     # arthur nao apaga <-------------------------
     # variavel redes terá varias <li> com links
@@ -86,16 +90,17 @@ def candidato():
 
     return render_template_string("""
     <html>
-    <head><title>{{ id_candidato }} - {{ cargo }}</title></head>
+    <head><title>{{ NomeCandidato }}</title></head>
     <body>
-        <h1>{{ id_candidato }} - {{ cargo }}</h1>
+        <h1> ({{ NumeroCandidato }}) {{ NomeCandidato }} - {{ cargo }}</h1>
         <p>Candidato a {{ cargo }} no município de {{ municipio }}.</p>
+        <p>{{ NomeUrna }} | {{ Partido }}</p>
         <img src="{{ imagem }}"> <br>
         <ul>{{ link_redes | safe }}</ul>
         <a href="/municipio?municipio={{ municipio }}">Voltar para o município</a>
     </body>
     </html>
-    """, link_redes=redes, imagem=imagem, id_candidato=id_candidato, cargo=cargo, municipio=municipio)
+    """, link_redes=redes, imagem=imagem, id_candidato=id_candidato, cargo=cargo, municipio=municipio, NomeCandidato=NomeCandidato, NomeUrna=NomeUrna, NumeroCandidato=NumeroCandidato, Partido=Partido)
 
 
 def start_flask():
