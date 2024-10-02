@@ -80,6 +80,7 @@ def candidato():
     NomeUrna = candidato_df['Nome na urna'].values[0]
     NumeroCandidato = candidato_df['Número'].values[0]
     Partido = candidato_df['Partido'].values[0]
+    SiglaPartido = candidato_df['Sigla do Partido'].values[0]
     redes = ""
     # arthur nao apaga <-------------------------
     # variavel redes terá varias <li> com links
@@ -94,13 +95,13 @@ def candidato():
     <body>
         <h1> ({{ NumeroCandidato }}) {{ NomeCandidato }} - {{ cargo }}</h1>
         <p>Candidato a {{ cargo }} no município de {{ municipio }}.</p>
-        <p>{{ NomeUrna }} | {{ Partido }}</p>
+        <p>{{ NomeUrna }} | {{ Partido }} ({{ SiglaPartido }})</p>
         <img src="{{ imagem }}"> <br>
         <ul>{{ link_redes | safe }}</ul>
         <a href="/municipio?municipio={{ municipio }}">Voltar para o município</a>
     </body>
     </html>
-    """, link_redes=redes, imagem=imagem, id_candidato=id_candidato, cargo=cargo, municipio=municipio, NomeCandidato=NomeCandidato, NomeUrna=NomeUrna, NumeroCandidato=NumeroCandidato, Partido=Partido)
+    """, link_redes=redes, imagem=imagem, id_candidato=id_candidato, cargo=cargo, municipio=municipio, NomeCandidato=NomeCandidato, NomeUrna=NomeUrna, NumeroCandidato=NumeroCandidato, Partido=Partido, SiglaPartido=SiglaPartido)
 
 
 def start_flask():
