@@ -14,18 +14,23 @@ cities_df = cities()
 
 @app.route('/')
 def index():
-    lista_municipios = "<ul>"
+    lista_municipios = "<ul class='flex flex-wrap gap-2'>"
     for municipio in cities_df:
-        lista_municipios += f"<li><a href='/municipio?municipio={municipio}'>{municipio}</a></li>"
+        lista_municipios += f"<li class='flex grow'><a class='justify-center p-4 gap-0 hover:scale-105 rounded border duration-300 text-center flex w-full h-full' href='/municipio?municipio={municipio}'>{municipio}</a></li>"
     lista_municipios += "</ul>"
     return render_template_string("""
-    <html>
-    <head><title>Municípios</title></head>
-    <body>
-        <h1>Lista de Municípios</h1>
-        {{ lista_municipios | safe }}
-    </body>
-    </html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Municípios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="container mx-auto">
+    <h1 class="py-4 font-bold text-gray-700 text-2xl text-center border-b">Lista de Municípios</h1>
+    <div class="flex mx-auto justify-center max-w-[700px] mt-4">{{ lista_municipios | safe }}</div>
+</body>
+</html>
     """, lista_municipios=lista_municipios)
 
 
