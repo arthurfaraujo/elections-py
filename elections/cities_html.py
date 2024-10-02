@@ -85,7 +85,7 @@ def candidato():
     NomeUrna = candidato_df['Nome na urna'].values[0]
     NumeroCandidato = candidato_df['Número'].values[0]
     Partido = candidato_df['Partido'].values[0]
-    SiglaPartido = candidato_df['Sigla do Partido'].values[0]
+    SiglaPartido = candidato_df['SG_PARTIDO'].values[0]
     redes = ""
     # arthur nao apaga <-------------------------
     # variavel redes terá varias <li> com links
