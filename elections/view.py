@@ -37,7 +37,7 @@ def gen_statistics_html() -> str:
             <h2 class="text-gray-600 text-center text-xl font-bold mb-4 pb-4 border-b">Partidos com Candidatos ao Cargo de Prefeito</h2>
             <ul class="flex flex-wrap">
                 {% for partido in partidos_prefeito %}
-                <li class="hover:scale-105 duration-300 border p-4 rounded m-2 grow">{{ partido }}</li>
+                <li class="hover:scale-105 cursor-default duration-300 border p-4 rounded m-2 grow">{{ partido }}</li>
                 {% endfor %}
             </ul>
         </div>

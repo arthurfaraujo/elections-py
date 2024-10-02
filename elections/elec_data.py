@@ -5,7 +5,7 @@ social_media_df = pd.read_csv("data/rede_social_candidato_2024_PB.csv", encoding
 goods_df = pd.read_csv("data/bem_candidato_2024_PB.csv", encoding="latin1", sep=";")
 
 
-candidates_df.rename(columns={"SQ_CANDIDATO": "Código Sequencial", "NM_CANDIDATO": "Nome", "NM_URNA_CANDIDATO": "Nome na urna", "NR_CANDIDATO": "Número","NM_PARTIDO": "Partido", "SG_PARTIDO": "Sigla do Partido"}, inplace=True)
+candidates_df.rename(columns={"SQ_CANDIDATO": "Código Sequencial", "NM_CANDIDATO": "Nome", "NM_URNA_CANDIDATO": "Nome na urna", "NR_CANDIDATO": "Número","NM_PARTIDO": "Partido"}, inplace=True)
 social_media_df.rename(columns={"SQ_CANDIDATO": "Código Sequencial", "DS_URL": "Link da rede social"}, inplace=True)
 goods_df.rename(columns={"SQ_CANDIDATO": "Código Sequencial", "DS_TIPO_BEM_CANDIDATO": "Tipo do bem", "DS_BEM_CANDIDATO": "Bem", "VR_BEM_CANDIDATO": "Valor do bem"}, inplace=True)
 
@@ -22,7 +22,7 @@ def social_medias_by_code(candidateCode: int):
   return social_media_df[social_media_df["Código Sequencial"] == candidateCode][["Link da rede social"]]
 
 def candidate_by_code(candidateCode: int) -> pd.DataFrame:
-  return candidates_df.loc[(candidates_df["Código Sequencial"] == candidateCode), ["Nome", "Nome na urna", "Número", "Partido", "Sigla do Partido"]]
+  return candidates_df.loc[(candidates_df["Código Sequencial"] == candidateCode), ["Nome", "Nome na urna", "Número", "Partido", "SG_PARTIDO"]]
 
 def role_quantity_count() -> dict:
     return candidates_df['DS_CARGO'].value_counts().to_dict()

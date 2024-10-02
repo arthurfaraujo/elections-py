@@ -28,7 +28,7 @@ def main():
 
             case "4":
                 clear()
-                print("Webserver iniciado, abra o navegador para acessar o site.")
+                print("Webserver iniciado no ip: http://127.0.0.1:5000/ abra o navegador para acessar o site.")
                 open_url("http://127.0.0.1:5000/")
                 input("\nPressione qualquer tecla para voltar ao menu...")
                 
@@ -39,7 +39,7 @@ def main():
                 break
             
             case _:
-                print("Opção inválida, tente de novo...")
+                print("Opcao invalida, tente de novo...")
                 time.sleep(0.8)
 
       
@@ -62,12 +62,12 @@ def display_menu():
     clear()
     print(
 '''Bem vindo(a) ao ElectionsAPE\n
-1 - Listar candidato por município e cargo
-2 - Exibir detalhes de um candidato a partir do código
-3 - Gerar página com estatísticas interessantes sobre os candidatos
-4 - Abrir página dos municípios
-0 - Fechar aplicação\n
-O que você deseja fazer?'''
+1 - Listar candidato por municipio e cargo
+2 - Exibir detalhes de um candidato a partir do codigo
+3 - Gerar pagina com estatisticas interessantes sobre os candidatos
+4 - Abrir pagina dos municipios
+0 - Fechar aplicacao\n
+O que voce deseja fazer?'''
     )
 
 
@@ -78,14 +78,14 @@ def option_by_city_and_role() -> None:
     clear()
     print("Digite 'q' para voltar ao menu anterior.")
     
-    city_code = input("Código numérico da cidade desejada: ").lower()
+    city_code = input("Codigo numerico da cidade desejada: ").lower()
     if city_code == "q":
         return
     
     if not validate_number(city_code):
         return option_by_city_and_role()
         
-    role_code = input("Código numérico do cargo desejado: ").lower()
+    role_code = input("Codigo numerico do cargo desejado: ").lower()
     if role_code == "q": 
         return
     
@@ -93,7 +93,7 @@ def option_by_city_and_role() -> None:
         return option_by_city_and_role()
     
     print()
-    print(treat_empty_df(candidates_by_city_and_role(int(city_code), int(role_code)), "Município ou cargo não encontrado!"))
+    print(treat_empty_df(candidates_by_city_and_role(int(city_code), int(role_code)), "Municipio ou cargo nao encontrado!"))
 
     input("\nPressione qualquer tecla para voltar ao menu...")
 
@@ -105,7 +105,7 @@ def option_by_code() -> None:
     clear()
     print("Digite 'q' para voltar ao menu anterior.")
     
-    candidate_code = input("Código sequencial numérico do candidato desejado: ").lower()
+    candidate_code = input("Codigo sequencial numerico do candidato desejado: ").lower()
     if candidate_code == "q":
         return
     
@@ -113,7 +113,7 @@ def option_by_code() -> None:
         return option_by_code()
     
     print()
-    print(treat_empty_df(candidate_by_code(int(candidate_code)), "Candidato não encontrado!"))
+    print(treat_empty_df(candidate_by_code(int(candidate_code)), "Candidato nao encontrado!"))
     print("\nBens do candidato(a):")
     print(treat_empty_df(goods_by_code(int(candidate_code)), "Nem um bem encontrado!"))
     print("\nRedes sociais do candidato(a):")
@@ -127,12 +127,14 @@ def option_gen_statistics() -> None:
     Opção do menu que gera uma página HTML com estatísticas sobre os candidatos.
     """
     clear()
-    user_confirm = input("Deseja abrir a página com as estatísticas (S ou N)? ").lower()
+    user_confirm = input("Deseja abrir a pagina com as estatisticas (S ou N)? ").lower()
     if user_confirm == "s":
         create_html_dir()
         open_file(gen_statistics_html())    
+    elif user_confirm == "n":
+        return
     elif user_confirm != "n":
-        print("Opção inválida...")
+        print("Opcao invalida...")
         time.sleep(0.8)
         option_gen_statistics()
     
