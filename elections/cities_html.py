@@ -1,6 +1,7 @@
 import logging
 from flask import Flask, render_template_string, request
 from elections.elec_data import cities, roles_by_city, social_medias_by_code, candidate_by_code
+import unicodedata
 
 app = Flask(__name__)
 
@@ -8,7 +9,6 @@ app = Flask(__name__)
 log = logging.getLogger('werkzeug')
 log.disabled = True
 app.logger.disabled = True
-
 
 cities_df = cities()
 
@@ -34,6 +34,14 @@ def index():
     """, lista_municipios=lista_municipios)
 
 
+def remover_acentos(tuple):
+    # Removendo acentos para ordenar alfabeticamente sem interferir na ordem
+    # Usando tupla porque estou pegando uma tupla com o nome e o numero do candidato
+    return ''.join(
+        c for c in unicodedata.normalize('NFD', tuple[0])
+        if unicodedata.category(c) != 'Mn'
+    )
+
 @app.route('/municipio')
 def municipio():
     municipio = request.args.get('municipio')
@@ -43,17 +51,17 @@ def municipio():
         candidates_city = roles_by_city(municipio)
         
         prefeitos = ""
-        for prefeito in candidates_city['prefeitos']:
-            prefeitos += f"<li><a class='flex w-full p-1 px-2 hover:bg-gray-200 border duration-300 text-center' href='/candidato?id={prefeito[1]}&cargo=Prefeito&municipio={municipio}'>{prefeito[0].title()}</a></li>"
+        for prefeito, numero in sorted(candidates_city['prefeitos'], key=remover_acentos):
+            prefeitos += f"<li><a class='flex w-full p-1 px-2 hover:bg-gray-200 border duration-300 text-center' href='/candidato?id={numero}&cargo=Prefeito&municipio={municipio}'>{prefeito.title()}</a></li>"
         
         vice_prefeitos = ""
-        for vice_prefeito in candidates_city['vice_prefeitos']:
-            vice_prefeitos += f"<li><a class='flex w-full p-1 px-2 hover:bg-gray-200 border duration-300 text-center' href='/candidato?id={vice_prefeito[1]}&cargo=Vice-Prefeito&municipio={municipio}'>{vice_prefeito[0].title()}</a></li>"
+        for vice_prefeito, numero in sorted(candidates_city['vice_prefeitos'], key=remover_acentos):
+            vice_prefeitos += f"<li><a class='flex w-full p-1 px-2 hover:bg-gray-200 border duration-300 text-center' href='/candidato?id={numero}&cargo=Vice-Prefeito&municipio={municipio}'>{vice_prefeito.title()}</a></li>"
         
         
         vereadores = ""
-        for vereador in candidates_city['vereadores']:
-            vereadores += f"<li><a class='flex w-full p-1 px-2 hover:bg-gray-200 border duration-300 text-center' href='/candidato?id={vereador[1]}&cargo=Vereador&municipio={municipio}'>{vereador[0].title()}</a></li>"
+        for vereador, numero in sorted(candidates_city['vereadores'], key=remover_acentos):
+            vereadores += f"<li><a class='flex w-full p-1 px-2 hover:bg-gray-200 border duration-300 text-center' href='/candidato?id={numero}&cargo=Vereador&municipio={municipio}'>{vereador.title()}</a></li>"
         
         
         return render_template_string("""
