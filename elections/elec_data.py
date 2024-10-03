@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 
 candidates_df = pd.read_csv("data/consulta_cand_2024_PB.csv", encoding="latin1", sep=";")
 social_media_df = pd.read_csv("data/rede_social_candidato_2024_PB.csv", encoding="latin1", sep=";") 
@@ -29,11 +30,16 @@ def role_quantity_count() -> dict:
 
 def parties_with_mayor_candidates() -> list:
     partidos = candidates_df[candidates_df['DS_CARGO'] == 'PREFEITO']['SG_PARTIDO'].unique()
-    return partidos.tolist()
+    return sorted(partidos.tolist())
 
 def quantity_by_age_group() -> dict:
-    candidates_df['IDADE'] = pd.to_datetime('2024-01-01') - pd.to_datetime(candidates_df['DT_NASCIMENTO'], format='%d/%m/%Y', errors='coerce')
-    candidates_df['IDADE'] = candidates_df['IDADE'].dt.days // 365
+    now = datetime.now()
+    candidates_df_nascimento = pd.to_datetime(candidates_df['DT_NASCIMENTO'], format='%d/%m/%Y', errors='coerce')
+    candidates_df['IDADE'] = now.year - candidates_df_nascimento.dt.year
+    candidates_df['IDADE'] -= (
+        (candidates_df_nascimento.dt.month > now.month) | 
+        ((candidates_df_nascimento.dt.month == now.month) & (candidates_df_nascimento.dt.day > now.day))
+    )
     faixa_ate_21 = candidates_df[candidates_df['IDADE'] <= 21].shape[0]
     faixa_22_40 = candidates_df[(candidates_df['IDADE'] > 21) & (candidates_df['IDADE'] <= 40)].shape[0]
     faixa_41_60 = candidates_df[(candidates_df['IDADE'] > 40) & (candidates_df['IDADE'] <= 60)].shape[0]
@@ -64,4 +70,4 @@ def roles_by_city(cityName: str) -> dict:
   }
   return dicionario 
 
-# print(list(social_medias_by_code(150001997026)))
+# quantity_by_age_group()
